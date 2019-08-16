@@ -1,6 +1,10 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const TerserJSPlugin = require('terser-webpack-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+
+const devMode = process.env.NODE_ENV !== 'production';
 
 module.exports = {
     entry: "./src/index.tsx",
@@ -15,14 +19,17 @@ module.exports = {
                 loader: "awesome-typescript-loader"
             },
             {
-                test: /\.scss$/,
+                test: /\.(sa|sc|c)ss$/,
                 use: [
-                    MiniCssExtractPlugin.loader,
                     {
-                        loader: "css-loader",
+                        loader: MiniCssExtractPlugin.loader,
+                        options: {
+                            hmr: process.env.NODE_ENV === 'development',
+                        },
                     },
-                    "sass-loader"
-                ]
+                    'css-loader',
+                    'sass-loader',
+                ],
             },
             {
                 enforce: 'pre',
@@ -31,12 +38,16 @@ module.exports = {
             },
         ]
     },
+    optimization: {
+        minimizer: [new TerserJSPlugin({}), new OptimizeCSSAssetsPlugin({})],
+    },
     plugins: [
         new HtmlWebpackPlugin({
             template: './index.html'
         }),
         new MiniCssExtractPlugin({
-            filename: 'style.css'
+            filename: devMode ? '[name].css' : '[name].[hash].css',
+            chunkFilename: devMode ? '[id].css' : '[id].[hash].css',
         }),
     ],
     resolve: {
