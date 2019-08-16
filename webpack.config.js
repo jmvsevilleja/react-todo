@@ -23,7 +23,12 @@ module.exports = {
                     },
                     "sass-loader"
                 ]
-            }
+            },
+            {
+                enforce: 'pre',
+                test: /\.js$/,
+                loader: 'source-map-loader'
+            },
         ]
     },
     plugins: [
@@ -36,5 +41,6 @@ module.exports = {
     ],
     resolve: {
         extensions: ['.js', '.ts', '.tsx']
-    }
+    },
+    devtool: 'source-map',
 }
