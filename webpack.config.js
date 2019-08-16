@@ -34,4 +34,7 @@ module.exports = {
             filename: 'style.css'
         }),
     ],
+    resolve: {
+        extensions: ['.js', '.ts', '.tsx']
+    }
 }
