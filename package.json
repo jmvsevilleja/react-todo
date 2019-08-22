@@ -22,7 +22,7 @@
     "optimize-css-assets-webpack-plugin": "^5.0.3",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
-    "sass-loader": "^7.2.0",
+    "sass-loader": "^7.3.1",
     "save-dev": "^2.0.0",
     "source-map-loader": "^0.2.4",
     "style-loader": "^1.0.0",
